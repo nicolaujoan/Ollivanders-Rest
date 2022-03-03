@@ -1,3 +1,7 @@
+import re
+from tracemalloc import stop
+
+
 class DB:
     __stock = [["+5 Dexterity Vest", 10, 20],
                     ["Aged Brie", 2, 0],
@@ -13,4 +17,10 @@ class DB:
     @classmethod
     def stock(cls):
         return cls.__stock
+    
+    @classmethod
+    def item(cls, name):
+        stock = cls.stock()
+        return list(filter(lambda item: item[0] == name, stock))[0]
+
     
