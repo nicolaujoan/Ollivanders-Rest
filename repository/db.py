@@ -10,6 +10,7 @@ class DB:
                     ["Conjured Mana Cake", 3, 6]
     
                     ]
+    @classmethod
     def stock(cls):
         return cls.__stock
     

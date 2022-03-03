@@ -7,4 +7,4 @@ class Service:
 
     @staticmethod
     def get_stock():
-        return DB.get_stock()
+        return DB.stock()
