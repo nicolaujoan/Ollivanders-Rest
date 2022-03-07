@@ -15,5 +15,10 @@ api.add_resource(Welcome, '/')
 api.add_resource(Item, '/item/<name>')
 api.add_resource(Stock, '/stock')
 
+# REPOSITORY (INIT OUR SQLITE3 DB)
+from repository.sql import dbRel
+dbRel.init_app(app)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

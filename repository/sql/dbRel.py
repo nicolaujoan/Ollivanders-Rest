@@ -4,6 +4,19 @@ import click
 from flask import current_app, g
 from flask.cli import with_appcontext
 
+# our database
+DATABASE = 'database.db'
+
+# init the db in the app (register in the application, instances will be available)
+
+def init_app(app):
+    app.config['DATABASE'] = DATABASE
+    app.teardown_appcontext(close_db)
+    app.cli.add_command(init_db_command)
+    app.cli.add_command(inserts_db_command)
+
+
+# using the db in our requests
 
 def get_db():
     if 'db' not in g:
@@ -27,13 +40,13 @@ def close_db(e=None):
 def init_db():
     db = get_db()
 
-    with current_app.open_resource('schema.sql') as f:
+    with current_app.open_resource('repository/sql/schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
 def inserts_db():
     db = get_db()
 
-    with current_app.open_resource('inserts.sql') as f:
+    with current_app.open_resource('repository/sql/inserts.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
 
