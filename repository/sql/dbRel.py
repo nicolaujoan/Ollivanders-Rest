@@ -8,6 +8,7 @@ from flask.cli import with_appcontext
 DATABASE = 'repository/sql/database.db'
 
 # init the db in the app (register in the application, instances will be available)
+# also adding commands to flask --> flask <command>
 
 def init_app(app):
     app.config['DATABASE'] = DATABASE
