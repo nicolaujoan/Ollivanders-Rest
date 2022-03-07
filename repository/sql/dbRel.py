@@ -5,7 +5,7 @@ from flask import current_app, g
 from flask.cli import with_appcontext
 
 # our database
-DATABASE = 'database.db'
+DATABASE = 'repository/sql/database.db'
 
 # init the db in the app (register in the application, instances will be available)
 
