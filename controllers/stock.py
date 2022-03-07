@@ -4,4 +4,4 @@ from services.service import Service
 
 class Stock(Resource):
     def get(self):
-        return Service.get_stock()
+        return Service.get_stock(), 200
