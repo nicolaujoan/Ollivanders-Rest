@@ -21,10 +21,19 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
+
+# python functions that will run sql commands (from our .sql files)
+
 def init_db():
     db = get_db()
 
     with current_app.open_resource('schema.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+
+def inserts_db():
+    db = get_db()
+
+    with current_app.open_resource('inserts.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
 
@@ -34,3 +43,11 @@ def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
     click.echo('Initialized the database.')
+
+
+@click.command('inserts-db')
+@with_appcontext
+def inserts_db_command():
+    """insert data into tables"""
+    inserts_db()
+    click.echo('Initial inserts done.')
