@@ -43,16 +43,33 @@ def close_db(e=None):
         db.close()
 
 # queries to our database
-def item(name):
-    if name not in ITEMS_NAMES: return {name: "not in Ollivanders"}
-    
-    db = get_db()
+
+########## GET ##########
+
+# ------- get all stock -------
+def stock():
+    db = get_db()  # get db connection
     cur = db.cursor()  # setup cursor
-    lista = []
-    for row in cur.execute('SELECT * FROM item'):  # get all items ordered by quality
+
+    items = []
+    for row in cur.execute('SELECT * FROM item'):  # get all items
+        items.append(list(row))
+    db.close()
+    return items
+
+# ------- get an item by its name -------
+def item(name):
+    db = get_db()
+    cur = db.cursor()
+
+    item = []
+    for row in cur.execute("SELECT * FROM item WHERE itsname = '%s'" % name):
         print(list(row))
-        lista.append(list(row))
-    return lista
+        item.append(list(row))
+    db.close()
+    return item
+
+
 
 # python functions that will run sql commands (from our .sql files)
 

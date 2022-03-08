@@ -7,10 +7,10 @@ class Service:
 
     @staticmethod
     def get_stock():
-        return DB.stock()
+        return dbRel.stock()
     
     @staticmethod
-    def get_item(name=False):
+    def get_item(name):
         # if not name:
         #     abort(404, message="item name needed")
         
