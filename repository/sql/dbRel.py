@@ -51,9 +51,7 @@ def stock():
     db = get_db()  # get db connection
     cur = db.cursor()  # setup cursor
 
-    items = []
-    for row in cur.execute('SELECT * FROM item'):  # get all items
-        items.append(list(row))
+    items = [list(row) for row in cur.execute('SELECT * FROM item')]  # get all items
     db.close()
     return items
 
@@ -62,14 +60,16 @@ def item(name):
     db = get_db()
     cur = db.cursor()
 
-    item = []
-    for row in cur.execute("SELECT * FROM item WHERE itsname = '%s'" % name):
-        print(list(row))
-        item.append(list(row))
-    db.close()
-    return item
+    if name in ITEMS_NAMES:
+        item = [list(row) for row in cur.execute("SELECT * FROM item WHERE itsname = '%s'" % name)]
+        close_db()
+        return item
 
+# -------- filters ---------
 
+########## DELETE ##########
+########## POST ############
+########## UPDATE #############
 
 # python functions that will run sql commands (from our .sql files)
 
