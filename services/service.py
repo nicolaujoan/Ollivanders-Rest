@@ -1,4 +1,4 @@
-from flask_restful import fields, marshal_with, abort
+from flask_restful import abort
 
 from repository.dbMock import DB
 from repository.sql import dbRel
@@ -8,6 +8,14 @@ class Service:
     @staticmethod
     def get_stock():
         return dbRel.stock()
+    
+    @staticmethod
+    def get_stock_by_sell_in():
+        return dbRel.stock_by_sell_in()
+    
+    @staticmethod
+    def get_stock_by_quality():
+        return dbRel.stock_by_quality()
     
     @staticmethod
     def get_item(name):
