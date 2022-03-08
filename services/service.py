@@ -11,13 +11,7 @@ class Service:
     
     @staticmethod
     def get_item(name):
-        # if not name:
-        #     abort(404, message="item name needed")
-        
-        # item = DB.item(name)
-        # if not item:
-        #     abort(404, message="item {} not in stock".format(name))
-        
-        # return {"name": item[0], "sell-in": item[1], "quality": item[2]}
-
+        item = dbRel.item(name)
+        if not item:
+            abort(404, message="item {} not in stock".format(name))
         return dbRel.item(name)
