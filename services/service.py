@@ -1,6 +1,7 @@
 from flask_restful import fields, marshal_with, abort
 
 from repository.dbMock import DB
+from repository.sql import dbRel
 
 class Service:
 
@@ -13,8 +14,10 @@ class Service:
         # if not name:
         #     abort(404, message="item name needed")
         
-        item = DB.item(name)
-        if not item:
-            abort(404, message="item {} not in stock".format(name))
+        # item = DB.item(name)
+        # if not item:
+        #     abort(404, message="item {} not in stock".format(name))
         
-        return {"name": item[0], "sell-in": item[1], "quality": item[2]}
+        # return {"name": item[0], "sell-in": item[1], "quality": item[2]}
+
+        return dbRel.item(name)

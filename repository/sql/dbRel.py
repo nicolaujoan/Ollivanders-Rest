@@ -7,6 +7,13 @@ from flask.cli import with_appcontext
 # our database
 DATABASE = 'repository/sql/database.db'
 
+# itemNames
+ITEMS_NAMES = [
+    
+    'Aged Brie', '+5 Dexterity Vest', 'Elixir of the Mongoose', 'Sulfuras, Hand of Ragnaros',
+    'Backstage passes to a TAFKAL80ETC concert', 'Conjured Mana Cake'
+]
+
 # init the db in the app (register in the application, instances will be available)
 # also adding commands to flask --> flask <command>
 
@@ -35,6 +42,17 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
+# queries to our database
+def item(name):
+    if name not in ITEMS_NAMES: return {name: "not in Ollivanders"}
+    
+    db = get_db()
+    cur = db.cursor()  # setup cursor
+    lista = []
+    for row in cur.execute('SELECT * FROM item'):  # get all items ordered by quality
+        print(list(row))
+        lista.append(list(row))
+    return lista
 
 # python functions that will run sql commands (from our .sql files)
 
@@ -50,6 +68,8 @@ def inserts_db():
     with current_app.open_resource('repository/sql/inserts.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
+
+# flask <name> commands 
 
 @click.command('init-db')
 @with_appcontext
