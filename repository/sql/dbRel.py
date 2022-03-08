@@ -52,7 +52,7 @@ def stock():
     cur = db.cursor()  # setup cursor
 
     items = [list(row) for row in cur.execute('SELECT * FROM item')]  # get all items
-    db.close()
+    close_db()
     return items
 
 # ------- get an item by its name -------
@@ -64,8 +64,27 @@ def item(name):
         item = [list(row) for row in cur.execute("SELECT * FROM item WHERE itsname = '%s'" % name)]
         close_db()
         return item
+    return []
 
 # -------- filters ---------
+
+# sell-in
+def stock_by_sell_in():
+    db = get_db()  # get db connection
+    cur = db.cursor()  # setup cursor
+
+    items = [list(row) for row in cur.execute('SELECT * FROM item ORDER BY sell_in DESC;')]
+    close_db()
+    return items
+
+# quality
+def stock_by_quality():
+    db = get_db()
+    cur = db.cursor()
+
+    items = [list(row) for row in cur.execute('SELECT * FROM item ORDER BY quality DESC;')]
+    close_db()
+    return items
 
 ########## DELETE ##########
 ########## POST ############
