@@ -1,7 +1,7 @@
 import sqlite3
 
 import click
-from flask import current_app, g
+from flask import current_app, g, request
 from flask.cli import with_appcontext
 
 # our database
@@ -86,8 +86,19 @@ def stock_by_quality():
     close_db()
     return items
 
-########## DELETE ##########
-########## POST ############
+########## DELETE #############
+
+
+########## PUT ################
+
+def post_item(name, sell_in=10, quality=10):
+    db = get_db()
+    cur = db.cursor()
+    print(name, sell_in, quality)
+    cur.execute("INSERT INTO item values (?, ?, ?, ?)", (50, name, sell_in, quality))
+    db.commit()
+    close_db()
+
 ########## UPDATE #############
 
 # python functions that will run sql commands (from our .sql files)
