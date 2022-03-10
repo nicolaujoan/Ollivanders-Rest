@@ -27,3 +27,7 @@ class Service:
     @staticmethod
     def post_item(name):
         dbRel.post_item(name, sell_in=10, quality=10)
+    
+    @staticmethod
+    def delete_item(name):
+        dbRel.delete_item_by_name(name)

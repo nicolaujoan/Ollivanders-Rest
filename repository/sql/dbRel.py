@@ -1,3 +1,4 @@
+from fileinput import close
 import sqlite3
 
 import click
@@ -87,6 +88,13 @@ def stock_by_quality():
     return items
 
 ########## DELETE #############
+def delete_item_by_name(name):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("DELETE FROM item WHERE itsname=:name", {"name": name})
+    db.commit()
+    print(cur.fetchall())
+    close_db()
 
 
 ########## PUT ################
@@ -94,7 +102,6 @@ def stock_by_quality():
 def post_item(name, sell_in=10, quality=10):
     db = get_db()
     cur = db.cursor()
-    print(name, sell_in, quality)
     cur.execute("INSERT INTO item values (?, ?, ?, ?)", (None, name, sell_in, quality))  # this solves integrity issues
     db.commit()
     close_db()
