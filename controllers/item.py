@@ -6,7 +6,7 @@ class Item(Resource):
         return Service.get_item(name),200
     
     def post(self, name):
-        return Service.post_item(name)
+        return Service.post_item(name), 201
     
     def delete(self, name):
-        return Service.delete_item(name), 200
+        return Service.delete_item(name), 204

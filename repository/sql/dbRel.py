@@ -93,11 +93,10 @@ def delete_item_by_name(name):
     cur = db.cursor()
     cur.execute("DELETE FROM item WHERE itsname=:name", {"name": name})
     db.commit()
-    print(cur.fetchall())
     close_db()
 
 
-########## PUT ################
+########## POST ################
 
 def post_item(name, sell_in=10, quality=10):
     db = get_db()
