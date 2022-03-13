@@ -6,7 +6,7 @@ from app import app
 def client():
     return app.test_client()
 
-''' Tests for '/'
+''' Tests for '/item/<name>'
     - only GET requests allowed
  '''
 
