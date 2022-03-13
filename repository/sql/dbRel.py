@@ -1,8 +1,6 @@
-from fileinput import close
 import sqlite3
-
 import click
-from flask import current_app, g, request
+from flask import current_app, g
 from flask.cli import with_appcontext
 
 # our database
