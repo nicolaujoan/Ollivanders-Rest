@@ -62,7 +62,7 @@ class Service:
 
     @staticmethod
     def post_item(name):
-        dbRel.post_item(name, sell_in=10, quality=10)
+        dbRel.post_item(name, sell_in=10, quality=10)  # item posted with default values
     
 
     @staticmethod
