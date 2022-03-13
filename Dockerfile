@@ -4,11 +4,11 @@ RUN apt-get update -y
 
 EXPOSE 5000
 
-COPY ./requirements.txt /app/requirements.txt
+COPY ./requirements.in /app/requirements.in
 
 WORKDIR /app
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.in
 
 COPY . /app
 
