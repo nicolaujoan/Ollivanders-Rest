@@ -1,11 +1,10 @@
-from crypt import methods
 from flask import Flask
 from flask_restful import Api
-from controllers.item import Item
-from controllers.welcome import Welcome;
-from controllers.stock import Stock
-from controllers.quality import StockByQuality
-from controllers.sell_in import StockBySellIn
+from resources.item import Item
+from resources.welcome import Welcome;
+from resources.stock import Stock
+from resources.quality import StockByQuality
+from resources.sell_in import StockBySellIn
 
 # app instance
 app = Flask(__name__)
