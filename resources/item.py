@@ -10,6 +10,6 @@ class Item(Resource):
     def post(self, name):
         return Service.post_item(name), 201
     
-    # curl http://localhost:8000/item/<name> -X DELETE  -v
+    # curl http://localhost:8000/item/<name> -X DELETE -v
     def delete(self, name):
         return Service.delete_item(name), 204

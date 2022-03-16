@@ -1,10 +1,10 @@
 # testing '/item' route
 import pytest
-from app import app
+from app import app  # bad, method to receive app
 
-@pytest.fixture
+@pytest.fixture  # conftest to configure fixtures
 def client():
-    return app.test_client()
+    return app.test_client()  # app client flask
 
 ''' Tests for '/item/<name>'
     - only GET requests allowed
