@@ -7,7 +7,7 @@ from resources.quality import StockByQuality
 from resources.sell_in import StockBySellIn
 
 # app instance
-app = create_app('')  # need to create a config file maybe for testing purposes or to put the route of the db
+app = create_app()  # need to create a config file maybe for testing purposes or to put the route of the db
 
 # REST API
 api = Api(app, catch_all_404s=True)

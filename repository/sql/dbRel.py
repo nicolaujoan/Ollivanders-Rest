@@ -6,6 +6,9 @@ from flask.cli import with_appcontext
 # our database
 DATABASE = 'repository/sql/database.db'
 
+# test DB
+TEST_DB = 'repository/sql/test.db'
+
 # itemNames
 ITEMS_NAMES = [
     
@@ -16,8 +19,13 @@ ITEMS_NAMES = [
 # init the db in the app (register in the application, instances will be available)
 # also adding commands to flask --> flask <command>
 
-def init_app(app):
-    app.config['DATABASE'] = DATABASE
+def init_app(app, production=True):
+    if production:
+        app.config['DATABASE'] = DATABASE
+        
+    else:
+        app.config['DATABASE'] = TEST_DB
+    
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
     app.cli.add_command(inserts_db_command)

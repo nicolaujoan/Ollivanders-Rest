@@ -3,7 +3,7 @@ import pytest
 from app import app
 
 # (setup function) flask client instance to simulate http requests to our Flask app
-@pytest.fixture  # define on co
+@pytest.fixture  # define on conftest
 def client():
     return app.test_client()
 
