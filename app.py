@@ -1,4 +1,4 @@
-from flask import Flask
+from resources.factory import create_app
 from flask_restful import Api
 from resources.item import Item
 from resources.welcome import Welcome;
@@ -7,7 +7,7 @@ from resources.quality import StockByQuality
 from resources.sell_in import StockBySellIn
 
 # app instance
-app = Flask(__name__)
+app = create_app('')  # need to create a config file maybe for testing purposes or to put the route of the db
 
 # REST API
 api = Api(app, catch_all_404s=True)
@@ -18,11 +18,6 @@ api.add_resource(Item, '/item/<name>')
 api.add_resource(Stock, '/stock')
 api.add_resource(StockBySellIn, '/stock/sell-in')
 api.add_resource(StockByQuality, '/stock/quality')
-# api.add_resource(PostItem, '/additem/<name>') 
-
-# REPOSITORY (INIT OUR SQLITE3 DB)
-from repository.sql import dbRel
-dbRel.init_app(app)
 
 
 if __name__ == '__main__':
