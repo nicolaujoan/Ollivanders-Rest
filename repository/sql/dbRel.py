@@ -118,13 +118,13 @@ def post_item(name, sell_in=10, quality=10):
 def init_db():
     db = get_db()
 
-    with current_app.open_resource('repository/sql/schema.sql') as f:
+    with current_app.open_resource('../repository/sql/schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
 def inserts_db():
     db = get_db()
 
-    with current_app.open_resource('repository/sql/inserts.sql') as f:
+    with current_app.open_resource('../repository/sql/inserts.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
 
