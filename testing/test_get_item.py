@@ -1,22 +1,30 @@
 # testing '/item' route
-import pytest
-from app import app  # bad, method to receive app
-
-@pytest.fixture  # conftest to configure fixtures
-def client():
-    return app.test_client()  # app client flask
-
-''' Tests for '/item/<name>'
-    - only GET requests allowed
- '''
+from repository.sql.dbRel import init_db, inserts_db
 
 
 # returns a single item (format expected)
-def test_aged_brie(client):
-    resp = client.get('/item/Aged Brie')
+def test_aged_brie(client, app):
+    with app.app_context():
+        init_db()
+        inserts_db()
+
+    # aged brie --> {'id': 1, 'name': 'Aged Brie', 'quality': 0, 'sell_in': 2}
+
+
+    resp = client.get('/item/Aged Brie')  # peticion
+
+    # type and status code ckecks
     assert resp.status_code == 200
     assert isinstance(resp.json, dict)
-    assert resp.json == {'id': 1, 'name': 'Aged Brie', 'quality': 0, 'sell_in': 2}
+
+    # load our json
+    data = resp.json
+
+    # fields check
+    assert data['id'] == 1
+    assert data['name'] == 'Aged Brie'
+    assert data['quality'] == 0
+    assert data['sell_in'] == 2
 
 
 # returns a list of items (format expected)
