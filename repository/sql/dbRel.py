@@ -97,7 +97,7 @@ def stock_by_quality():
 def delete_item_by_name(name):
     db = get_db()
     cur = db.cursor()
-    cur.execute("DELETE FROM item WHERE itsname=:name", {"name": name})
+    cur.execute("DELETE FROM item WHERE itsname=:name LIMIT 1", {"name": name})
     db.commit()
     close_db()
 
@@ -107,9 +107,11 @@ def delete_item_by_name(name):
 def post_item(name, sell_in=10, quality=10):
     db = get_db()
     cur = db.cursor()
-    cur.execute("INSERT INTO item values (?, ?, ?, ?)", (None, name, sell_in, quality))  # this solves integrity issues
+    result = cur.execute("INSERT INTO item values (?, ?, ?, ?)", (None, name, sell_in, quality))  # this solves integrity issues
+    id = result.lastrowid
     db.commit()
     close_db()
+    return id  # return the id of the posted item
 
 ########## UPDATE #############
 
