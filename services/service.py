@@ -1,5 +1,6 @@
 from flask_restful import abort
 from repository.sql import dbRel
+from domain.gilded_rose import *
 
 class Service:
 
@@ -69,3 +70,40 @@ class Service:
     def delete_item(name):
         dbRel.delete_item_by_name(name)
         return {"deleted": name}
+
+    @staticmethod
+    def update_quality():
+        db_stock = dbRel.stock()  # stock from db
+        stock_objects = Service.domainize(db_stock)  # same but domain objects instead of dicts
+        stock = GildedRose(stock_objects)  # GildedRose stock (domain stock)
+        stock.updateQuality()
+        stock_objects = stock.get_stock()  # updated objects list
+        db_stock = Service.undomainize(stock_objects)  # updated items list (dicts representation)
+        dbRel.update_stock(db_stock)
+
+        
+    @staticmethod
+    def domainize(stock):
+        domain_stock = []
+        for item in stock:
+            if item['itsname'] == '+5 Dexterity Vest':
+                domain_stock.append(NormalItem(item['id'], item['itsname'], item['sell_in'], item['quality']))
+            if item['itsname'] == 'Aged Brie':
+                domain_stock.append(AgedBrie(item['id'], item['itsname'], item['sell_in'], item['quality']))
+            if item['itsname'] == 'Elixir of the Mongoose':
+                domain_stock.append(NormalItem(item['id'], item['itsname'], item['sell_in'], item['quality']))
+            if item['itsname'] == 'Sulfuras, Hand of Ragnaros':
+                domain_stock.append(Sulfuras(item['id'], item['itsname'], item['sell_in'], item['quality']))
+            if item['itsname'] == 'Backstage passes to a TAFKAL80ETC concert':
+                domain_stock.append(BackstagePass(item['id'], item['itsname'], item['sell_in'], item['quality']))
+            if item['itsname'] == 'Conjured Mana Cake':
+                domain_stock.append(Conjured(item['id'], item['itsname'], item['sell_in'], item['quality']))
+        return domain_stock
+            
+
+    @staticmethod
+    def undomainize(stock):
+        db_stock = []
+        for object in stock:
+            db_stock.append({"id": object.id, "itsname": object.name, "sell_in": object.sell_in, "quality": object.quality})
+        return db_stock    
