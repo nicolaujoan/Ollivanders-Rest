@@ -1,0 +1,4 @@
+pytest
+coverage run -m pytest
+coverage report
+coverage html  --> htmlcov/index.html
