@@ -1,3 +1,4 @@
+import pytest
 # testing '/item' route
 from repository.sql.dbRel import init_db, inserts_db
 
