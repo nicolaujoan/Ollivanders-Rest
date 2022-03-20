@@ -1,6 +1,4 @@
 # testing '/' route
-import pytest
-
 
 def test_home(client):
     resp = client.get('/')
