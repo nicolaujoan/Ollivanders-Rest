@@ -1,11 +1,11 @@
 import pytest
-from gilded_rose import BackstagePass
+from domain.gilded_rose import BackstagePass
 from test_collector import TestAutomata
 
 # day 0
-backPass1 = BackstagePass("Backstage passes to a TAFKAL80ETC concert", 15, 20)
-backPass2 = BackstagePass("Backstage passes to a TAFKAL80ETC concert", 10, 49)
-backPass3 = BackstagePass("Backstage passes to a TAFKAL80ETC concert", 5, 49)
+backPass1 = BackstagePass(0, "Backstage passes to a TAFKAL80ETC concert", 15, 20)
+backPass2 = BackstagePass(1, "Backstage passes to a TAFKAL80ETC concert", 10, 49)
+backPass3 = BackstagePass(2, "Backstage passes to a TAFKAL80ETC concert", 5, 49)
 
 # getting all Backstage passes results from stdout.gr
 EXPECTED_REPS = TestAutomata.getExpectedReps("stdout.gr", "Backstage passes", 3)
