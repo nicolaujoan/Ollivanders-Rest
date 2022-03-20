@@ -9,11 +9,15 @@ class GildedRose(object):
 
     def add_item(self):
         pass
+    
+    def get_stock(self):
+        return self.stock
 
 
 # this class cannot be modified ( kata rules !!! )
 class Item:
-    def __init__(self, name, sell_in, quality):
+    def __init__(self, id,  name, sell_in, quality):
+        self.id = id
         self.name = name
         self.sell_in = sell_in
         self.quality = quality
@@ -31,8 +35,8 @@ class Updateable:
 
 class NormalItem(Item, Updateable):
 
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
+    def __init__(self, id, name, sell_in, quality):
+        super().__init__(id, name, sell_in, quality)
 
     def getQuality(self) -> int:
         return self.quality
@@ -59,15 +63,15 @@ class NormalItem(Item, Updateable):
 class Sulfuras(Item, Updateable):
     QUALITY = 80
 
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, Sulfuras.QUALITY)
+    def __init__(self, id, name, sell_in, quality):
+        super().__init__(id, name, sell_in, Sulfuras.QUALITY)
 
 
 # inherits from NormalItem because its behaviour is similar (can reuse methods)
 class Conjured(NormalItem, Updateable):
 
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
+    def __init__(self, id, name, sell_in, quality):
+        super().__init__(id, name, sell_in, quality)
 
     def updateQuality(self):
         if self.getSellIn() < 0 and self.getQuality() == 1:
@@ -85,8 +89,8 @@ class Conjured(NormalItem, Updateable):
 class AgedBrie(Item, Updateable):
     MAX_QUALITY = 50
 
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
+    def __init__(self, id, name, sell_in, quality):
+        super().__init__(id, name, sell_in, quality)
 
     def getQuality(self) -> int:
         return self.quality
@@ -113,8 +117,8 @@ class AgedBrie(Item, Updateable):
 class BackstagePass(Item, Updateable):
     MAX_QUALITY = 50
 
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
+    def __init__(self,id,  name, sell_in, quality):
+        super().__init__(id, name, sell_in, quality)
 
     def getQuality(self) -> int:
         return self.quality

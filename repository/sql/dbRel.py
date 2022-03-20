@@ -1,11 +1,13 @@
 import sqlite3
-
 import click
-from flask import current_app, g, request
+from flask import current_app, g
 from flask.cli import with_appcontext
 
 # our database
 DATABASE = 'repository/sql/database.db'
+
+# test DB
+TEST_DB = 'repository/sql/test.db'
 
 # itemNames
 ITEMS_NAMES = [
@@ -17,8 +19,13 @@ ITEMS_NAMES = [
 # init the db in the app (register in the application, instances will be available)
 # also adding commands to flask --> flask <command>
 
-def init_app(app):
-    app.config['DATABASE'] = DATABASE
+def init_app(app, production=True):
+    if production:
+        app.config['DATABASE'] = DATABASE
+        
+    else:
+        app.config['DATABASE'] = TEST_DB
+    
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
     app.cli.add_command(inserts_db_command)
@@ -51,7 +58,7 @@ def stock():
     db = get_db()  # get db connection
     cur = db.cursor()  # setup cursor
 
-    items = [list(row) for row in cur.execute('SELECT * FROM item')]  # get all items
+    items = [dict(row) for row in cur.execute('SELECT * FROM item')]  # get all items
     close_db()
     return items
 
@@ -73,7 +80,7 @@ def stock_by_sell_in():
     db = get_db()  # get db connection
     cur = db.cursor()  # setup cursor
 
-    items = [list(row) for row in cur.execute('SELECT * FROM item ORDER BY sell_in DESC;')]
+    items = [dict(row) for row in cur.execute('SELECT * FROM item ORDER BY sell_in DESC;')]
     close_db()
     return items
 
@@ -82,24 +89,43 @@ def stock_by_quality():
     db = get_db()
     cur = db.cursor()
 
-    items = [list(row) for row in cur.execute('SELECT * FROM item ORDER BY quality DESC;')]
+    items = [dict(row) for row in cur.execute('SELECT * FROM item ORDER BY quality DESC;')]
     close_db()
     return items
 
 ########## DELETE #############
+def delete_item_by_name(name):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("DELETE FROM item WHERE itsname=:name LIMIT 1", {"name": name})
+    db.commit()
+    close_db()
+    return name
 
 
-########## PUT ################
+########## POST ################
 
 def post_item(name, sell_in=10, quality=10):
     db = get_db()
     cur = db.cursor()
-    print(name, sell_in, quality)
-    cur.execute("INSERT INTO item values (?, ?, ?, ?)", (None, name, sell_in, quality))  # this solves integrity issues
+    result = cur.execute("INSERT INTO item values (?, ?, ?, ?)", (None, name, sell_in, quality))  # this solves integrity issues
+    id = result.lastrowid
     db.commit()
     close_db()
+    return id  # return the id of the posted item
 
 ########## UPDATE #############
+
+def update_stock(stock):
+    db = get_db()
+    cur = db.cursor()
+
+    for item in stock:
+        print(item)
+        cur.execute('''UPDATE item SET sell_in={}, quality={} 
+        WHERE id={}'''.format(item['sell_in'], item['quality'], item['id']))
+        db.commit()
+    close_db()
 
 # python functions that will run sql commands (from our .sql files)
 

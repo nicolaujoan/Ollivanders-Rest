@@ -1,31 +1,36 @@
-from crypt import methods
 from flask import Flask
 from flask_restful import Api
-from controllers.item import Item
-from controllers.welcome import Welcome;
-from controllers.stock import Stock
-from controllers.quality import StockByQuality
-from controllers.sell_in import StockBySellIn
-from controllers.post_item import PostItem
+from resources.item import Item
+from resources.welcome import Welcome;
+from resources.stock import Stock
+from resources.quality import StockByQuality
+from resources.sell_in import StockBySellIn
 
-# app instance
-app = Flask(__name__)
+def create_app(production=False):
+    # app instance (production or test mode)
+    app = Flask(__name__)
 
-# REST API
-api = Api(app, catch_all_404s=True)
+    # if app.config.db = sqlite
+    # take the sqlite db
+    from repository.sql import dbRel
+    if production:
+        dbRel.init_app(app)
+    else:
+        dbRel.init_app(app, False)
 
-# RESOURCES
-api.add_resource(Welcome, '/')
-api.add_resource(Item, '/item/<name>')
-api.add_resource(Stock, '/stock')
-api.add_resource(StockBySellIn, '/stock/sell-in')
-api.add_resource(StockByQuality, '/stock/quality')
-api.add_resource(PostItem, '/additem/<name>')
+    # REST API
+    api = Api(app, catch_all_404s=True)
 
-# REPOSITORY (INIT OUR SQLITE3 DB)
-from repository.sql import dbRel
-dbRel.init_app(app)
+    # RESOURCES
+    api.add_resource(Welcome, '/')
+    api.add_resource(Item, '/item/<name>')
+    api.add_resource(Stock, '/stock')
+    api.add_resource(StockBySellIn, '/stock/sell-in')
+    api.add_resource(StockByQuality, '/stock/quality')
+
+    return app
 
 
 if __name__ == '__main__':
+    app = create_app()
     app.run(debug=True)
