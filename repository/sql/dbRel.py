@@ -116,6 +116,17 @@ def post_item(name, sell_in=10, quality=10):
 
 ########## UPDATE #############
 
+def update_stock(stock):
+    db = get_db()
+    cur = db.cursor()
+
+    for item in stock:
+        print(item)
+        cur.execute('''UPDATE item SET sell_in={}, quality={} 
+        WHERE id={}'''.format(item['sell_in'], item['quality'], item['id']))
+        db.commit()
+    close_db()
+
 # python functions that will run sql commands (from our .sql files)
 
 def init_db():
