@@ -58,7 +58,7 @@ def stock():
     db = get_db()  # get db connection
     cur = db.cursor()  # setup cursor
 
-    items = [list(row) for row in cur.execute('SELECT * FROM item')]  # get all items
+    items = [dict(row) for row in cur.execute('SELECT * FROM item')]  # get all items
     close_db()
     return items
 
@@ -80,7 +80,7 @@ def stock_by_sell_in():
     db = get_db()  # get db connection
     cur = db.cursor()  # setup cursor
 
-    items = [list(row) for row in cur.execute('SELECT * FROM item ORDER BY sell_in DESC;')]
+    items = [dict(row) for row in cur.execute('SELECT * FROM item ORDER BY sell_in DESC;')]
     close_db()
     return items
 
@@ -89,7 +89,7 @@ def stock_by_quality():
     db = get_db()
     cur = db.cursor()
 
-    items = [list(row) for row in cur.execute('SELECT * FROM item ORDER BY quality DESC;')]
+    items = [dict(row) for row in cur.execute('SELECT * FROM item ORDER BY quality DESC;')]
     close_db()
     return items
 
