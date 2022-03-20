@@ -3,7 +3,7 @@ from domain.gilded_rose import AgedBrie
 from test_collector import TestAutomata
 
 # day 0
-cheese = AgedBrie("Aged Brie", 2, 0)
+cheese = AgedBrie(0, "Aged Brie", 2, 0)
 
 # getting all Aged brie results from stdout.gr
 EXPECTED_REPS = TestAutomata.getExpectedReps("stdout.gr", "Aged Brie")

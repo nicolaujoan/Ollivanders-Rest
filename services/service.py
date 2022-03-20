@@ -75,9 +75,9 @@ class Service:
     def update_quality():
         db_stock = dbRel.stock()  # stock from db
         stock_objects = Service.domainize(db_stock)  # same but domain objects instead of dicts
-        stock = GildedRose(stock_objects)  # GildedRose stock (domain stock)
-        stock.updateQuality()
-        stock_objects = stock.get_stock()  # updated objects list
+        stock_gilded = GildedRose(stock_objects)  # GildedRose stock (domain stock)
+        stock_gilded.updateQuality()
+        stock_objects = stock_gilded.get_stock()  # updated objects list
         db_stock = Service.undomainize(stock_objects)  # updated items list (dicts representation)
         dbRel.update_stock(db_stock)
 

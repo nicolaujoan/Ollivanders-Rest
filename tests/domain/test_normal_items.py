@@ -3,11 +3,11 @@ from domain.gilded_rose import NormalItem
 from test_collector import TestAutomata
 
 # elixir (day 0)
-elixir = NormalItem("Elixir of the Mongoose", 5, 7)
+elixir = NormalItem(0, "Elixir of the Mongoose", 5, 7)
 ELIXIR_EXPECTED_REPS = TestAutomata.getExpectedReps("stdout.gr", "Elixir")
 
 # dexterity vest (day 0)
-dexter = NormalItem("+5 Dexterity Vest", 10, 20)
+dexter = NormalItem(0, "+5 Dexterity Vest", 10, 20)
 DEXTER_EXPECTED_REPS = TestAutomata.getExpectedReps("stdout.gr", "+5")
 
 
