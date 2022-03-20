@@ -1,5 +1,5 @@
 import pytest
-from gilded_rose import Conjured
+from domain.gilded_rose import Conjured
 from test_collector import TestAutomata
 
 # day 0

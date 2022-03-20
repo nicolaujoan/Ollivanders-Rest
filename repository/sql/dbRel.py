@@ -100,6 +100,7 @@ def delete_item_by_name(name):
     cur.execute("DELETE FROM item WHERE itsname=:name LIMIT 1", {"name": name})
     db.commit()
     close_db()
+    return name
 
 
 ########## POST ################

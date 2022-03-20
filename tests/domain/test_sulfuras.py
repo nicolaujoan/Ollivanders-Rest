@@ -1,5 +1,5 @@
 import pytest
-from gilded_rose import Sulfuras
+from domain.gilded_rose import Sulfuras
 from test_collector import TestAutomata
 
 # day 0

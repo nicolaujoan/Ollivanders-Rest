@@ -67,5 +67,5 @@ class Service:
 
     @staticmethod
     def delete_item(name):
-        deleted_id = dbRel.delete_item_by_name(name)
-        return {'id': deleted_id}
+        dbRel.delete_item_by_name(name)
+        return {"deleted": name}
